@@ -1,13 +1,16 @@
-public class CreditCardPayment implements PaymentProcess{
-    private String cardnumber;
+// Notice the exact spelling of PaymentProcessor here
+public class CreditCardPayment implements PaymentProcessor {
+    // You must declare the variable here first!
+    private String cardNumber;
 
-    public CreditcardPayment(String cardnumber){
-        this.cardnumber = cardnumber;
-
+    // The Constructor MUST match the class name exactly (Capital C)
+    public CreditCardPayment(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
+
     @Override
-    public boolean processPayment(double amount){
+    public boolean processPayment(double amount) {
         System.out.println("💳 Processing credit card payment of $" + amount + " for card ending in " + cardNumber.substring(cardNumber.length() - 4));
-        return true; // Simulate a successful payment
+        return true; 
     }
 }

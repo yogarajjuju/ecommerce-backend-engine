@@ -17,3 +17,9 @@
   * `Exception` (Checked): The compiler forces you to use a `try-catch` block or declare `throws` in the method signature.
 * **The `throw` Keyword:** Used to actively trigger an error condition (`throw new InsufficientStockException(...)`).
 * **The `try-catch` Block:** Attempts "dangerous" code. If an exception is thrown, the app doesn't crash; execution jumps to the `catch` block to handle the error gracefully.
+
+
+## 4. Interfaces & Polymorphism
+* **Interface:** A "contract" in Java. It defines *what* a class must do (e.g., `processPayment()`), but not *how* it does it. 
+* **Polymorphism:** Meaning "many forms." It allows us to treat different objects (like a `CreditCardPayment` and a `UPIPayment`) as the exact same type (`PaymentProcessor`).
+* **Why it matters (The Interview Answer):** It creates **Loose Coupling**. Our `Main` application doesn't need to know how a credit card API or a UPI API works under the hood. It just calls `.processPayment()` and trusts that the underlying object knows what to do. This makes adding new payment methods in the future (like PayPal or Crypto) incredibly easy without rewriting the core checkout logic.
