@@ -23,3 +23,22 @@
 * **Interface:** A "contract" in Java. It defines *what* a class must do (e.g., `processPayment()`), but not *how* it does it. 
 * **Polymorphism:** Meaning "many forms." It allows us to treat different objects (like a `CreditCardPayment` and a `UPIPayment`) as the exact same type (`PaymentProcessor`).
 * **Why it matters (The Interview Answer):** It creates **Loose Coupling**. Our `Main` application doesn't need to know how a credit card API or a UPI API works under the hood. It just calls `.processPayment()` and trusts that the underlying object knows what to do. This makes adding new payment methods in the future (like PayPal or Crypto) incredibly easy without rewriting the core checkout logic.
+
+
+# Module 2: The Data Layer & Containerization
+
+## 1. Docker & Containers
+* **What it is:** A tool that packages software into standardized units called "containers."
+* **Why we use it (The Interview Answer):** It solves the "It works on my machine" problem. Instead of installing MySQL directly on an OS and fighting with dependencies, Docker spins up an isolated, pristine server that runs exactly the same way on any developer's computer.
+
+## 2. Relational Databases (SQL)
+* **`CREATE TABLE`:** Acts like a Java Class. It builds the strict blueprint (schema) for the data.
+* **`PRIMARY KEY`:** A rule ensuring every row has a unique identifier (like our Product ID), making searches incredibly fast.
+* **`DECIMAL(10,2)` vs `DOUBLE`:** Always use `DECIMAL` for financial data in SQL to prevent floating-point rounding errors.
+
+## 3. JDBC (Java Database Connectivity)
+* **What it is:** The official Java API ("The Waiter") that allows our Java code to talk to relational databases using a driver (`.jar` file).
+* **The Process:**
+  1. `Connection`: Logs into the database using URL, User, and Password.
+  2. `PreparedStatement`: A pre-compiled SQL statement. We use this instead of standard `Statement` because it prevents SQL Injection attacks and allows us to safely pass Java variables into SQL using `?` placeholders.
+  3. `ResultSet`: The "tray" that holds the data MySQL sends back to Java after a `SELECT` query.

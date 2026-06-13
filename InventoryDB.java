@@ -1,27 +1,82 @@
-import java.util.*;
+import java.sql.*;
 
-public class InventoryDB{
-    private Map<String ,Product> database;
-    // This is our in-memory database table.
-    // Key = String (Product ID), Value = Product (The actual object)
+public class InventoryDB {
+    
+    // Database credentials
+    private static final String URL = "jdbc:mysql://localhost:3306/ecommerce_db";
+    private static final String USER = "root";
+    private static final String PASSWORD = "rootpassword";
 
-    public InventoryDB(){
-        this.database = new HashMap<>();
-    }
-// Method to add a new product to our database
-    public void addProduct(Product product){
-        database.put(product.getId(), product);
-    }
-    // Method to fetch a product (O(1) Time Complexity!) 
-    public  Product getProduct(String id){
-        return database.get(id);
-    }
-    public void printAllInventory() {
-        System.out.println("\n--- 📦 Store Inventory ---");
-        // Loop through all values in the HashMap
-        for (Product p : database.values()) {
-            System.out.println(p); // This automatically calls your custom toString() method!
+    public InventoryDB() {
+        // Test the connection when the app starts
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            System.out.println("✅ [LOG] Connected to MySQL Database successfully!");
+        } catch (SQLException e) {
+            System.out.println("❌ [LOG] Database Connection Failed!");
+            e.printStackTrace();
         }
     }
 
+    // Fetch a single product from the database
+    public Product getProduct(String id) {
+        String sql = "SELECT * FROM inventory WHERE id = ?";
+        
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, id); // Replaces the '?' with the product ID
+            ResultSet rs = pstmt.executeQuery();
+
+            // If we found a row in the database, convert it into a Java Object
+            if (rs.next()) {
+                return new Product(
+                    rs.getString("id"),
+                    rs.getString("name"),
+                    rs.getDouble("price"),
+                    rs.getInt("stock")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Return null if not found
+    }
+
+    // Print everything in the database
+    public void printAllInventory() {
+        System.out.println("\n--- 📦 Live Store Inventory (MySQL) ---");
+        String sql = "SELECT * FROM inventory";
+        
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+             
+            while (rs.next()) {
+                Product p = new Product(
+                    rs.getString("id"),
+                    rs.getString("name"),
+                    rs.getDouble("price"),
+                    rs.getInt("stock")
+                );
+                System.out.println(p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // NEW: Update the database after someone buys something
+    public void updateStockInDB(String id, int newStock) {
+        String sql = "UPDATE inventory SET stock = ? WHERE id = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, newStock);
+            pstmt.setString(2, id);
+            pstmt.executeUpdate();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
