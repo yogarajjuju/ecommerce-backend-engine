@@ -42,3 +42,19 @@
   1. `Connection`: Logs into the database using URL, User, and Password.
   2. `PreparedStatement`: A pre-compiled SQL statement. We use this instead of standard `Statement` because it prevents SQL Injection attacks and allows us to safely pass Java variables into SQL using `?` placeholders.
   3. `ResultSet`: The "tray" that holds the data MySQL sends back to Java after a `SELECT` query.
+
+# Module 3: Spring Boot & Web APIs (REST)
+
+## 1. Maven (The Package Manager)
+* **What it is:** A build tool that automatically downloads dependencies (like our MySQL JDBC driver) from the internet and compiles our code.
+* **`pom.xml`:** The "shopping list." Instead of manually downloading `.jar` files, we write what we need in this file, and Maven grabs it automatically.
+
+## 2. Spring Boot (The Framework)
+* **What it is:** An enterprise Java framework that comes with a built-in web server (Tomcat). It removes the need to write complex server infrastructure from scratch.
+* **The Analogy:** If pure Java is building an engine from scratch, Spring Boot is buying a fully assembled sports car.
+
+## 3. Web API Concepts
+* **REST API:** A way for different software systems to communicate over the internet using standard HTTP protocols.
+* **`@RestController`:** An annotation that tells Spring Boot, "This Java class is a Drive-Thru window open to the internet."
+* **`@GetMapping("/products")`:** Tells the server to run a specific method when a user visits that exact URL.
+* **JSON (JavaScript Object Notation):** The universal language of the web. Spring Boot automatically converts our Java `List<Product>` into formatted JSON text before sending it to the browser.
