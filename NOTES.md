@@ -66,3 +66,22 @@
 =======
 * **JSON (JavaScript Object Notation):** The universal language of the web. Spring Boot automatically converts our Java `List<Product>` into formatted JSON text before sending it to the browser.
 >>>>>>> Stashed changes
+### 4. How the Internet talks to Java (Spring Boot Annotations)
+There are two main ways a user can send data to our API:
+
+* **`@PathVariable` (The URL Method):**
+    * **The Analogy:** Shouting your order from the car.
+    * **What it is:** The data is right there in the web address (e.g., `localhost:8080/products/P001`).
+    * **When to use it:** For short, simple lookups like finding a single item by its ID. Used mostly with `@GetMapping`.
+
+* **`@RequestBody` (The JSON Method):**
+    * **The Analogy:** Handing the worker a folded paper order slip.
+    * **What it is:** The data is sent in a secure, structured JSON package over the network, completely hidden from the URL.
+    * **When to use it:** For complex or secure data, like checkout forms, quantities, or passwords. Used mostly with `@PostMapping`.
+
+### 5. The Anatomy of a Simple REST API
+A REST API isn't magic; it's just a set of standard rules (like using GET and POST) so different systems can talk safely. Building one in Spring Boot takes just three pieces:
+
+1.  **The Building Tag (`@RestController`):** Put this at the top of the file to open the Java class to the internet.
+2.  **The Window Tag (`@GetMapping("/status")`):** Maps a specific web URL to the Java method directly below it.
+3.  **The Method:** Standard Java logic that runs and returns data (or text) straight to the user's screen.
