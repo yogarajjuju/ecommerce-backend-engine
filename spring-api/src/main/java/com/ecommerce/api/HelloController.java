@@ -10,6 +10,6 @@ public class HelloController {
     // @GetMapping tells Spring: "If a user visits my-website.com/hello, run this method!"
     @GetMapping("/hello")
     public String sayHello() {
-        return "🔥 BOOM! Your Spring Boot API is officially live on the internet!";
+        return "Welcome to my Store";
     }
 }
