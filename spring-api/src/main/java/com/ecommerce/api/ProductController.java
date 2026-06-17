@@ -58,4 +58,9 @@ public class ProductController {
         // 3. Ask the database for that specific ID and hand it out the window
         return db.getProduct(id);
     }
+    @GetMapping("/status")
+
+    public String checkStatus(){
+        return "The backend engine is 100% awake!";
+    }
 }

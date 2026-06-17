@@ -43,7 +43,11 @@
   2. `PreparedStatement`: A pre-compiled SQL statement. We use this instead of standard `Statement` because it prevents SQL Injection attacks and allows us to safely pass Java variables into SQL using `?` placeholders.
   3. `ResultSet`: The "tray" that holds the data MySQL sends back to Java after a `SELECT` query.
 
+<<<<<<< Updated upstream
 # Module 3: Spring Boot & Web APIs (REST)
+=======
+  # Module 3: Spring Boot & Web APIs (REST)
+>>>>>>> Stashed changes
 
 ## 1. Maven (The Package Manager)
 * **What it is:** A build tool that automatically downloads dependencies (like our MySQL JDBC driver) from the internet and compiles our code.
@@ -57,4 +61,8 @@
 * **REST API:** A way for different software systems to communicate over the internet using standard HTTP protocols.
 * **`@RestController`:** An annotation that tells Spring Boot, "This Java class is a Drive-Thru window open to the internet."
 * **`@GetMapping("/products")`:** Tells the server to run a specific method when a user visits that exact URL.
+<<<<<<< Updated upstream
 * **JSON (JavaScript Object Notation):** The universal language of the web. Spring Boot automatically converts our Java `List<Product>` into formatted JSON text before sending it to the browser.
+=======
+* **JSON (JavaScript Object Notation):** The universal language of the web. Spring Boot automatically converts our Java `List<Product>` into formatted JSON text before sending it to the browser.
+>>>>>>> Stashed changes
