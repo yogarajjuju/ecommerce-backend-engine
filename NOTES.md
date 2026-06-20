@@ -85,3 +85,20 @@ A REST API isn't magic; it's just a set of standard rules (like using GET and PO
 1.  **The Building Tag (`@RestController`):** Put this at the top of the file to open the Java class to the internet.
 2.  **The Window Tag (`@GetMapping("/status")`):** Maps a specific web URL to the Java method directly below it.
 3.  **The Method:** Standard Java logic that runs and returns data (or text) straight to the user's screen.
+
+### 6. The API & Architecture Cheat Sheet
+* **@RestController:** The Drive-Thru window. Tells Spring Boot to open this file to the internet.
+* **@GetMapping:** Used for *reading* data (like looking at a menu). This is what web browsers default to.
+* **@PostMapping:** Used for *submitting* data (like a checkout form). Web browsers cannot do this from the URL bar; it requires a hidden JSON package.
+* **JSON:** (JavaScript Object Notation). A structured text format `{}` used to safely send data between completely different systems (like a phone app and a Java server).
+
+### 7. The 3-Tier Architecture (Single Responsibility Principle)
+To prevent server crashes and keep code organized, enterprise backends are split into three separate jobs:
+1. **The Controller (The Waiter):** ONLY takes orders from the internet. Hands the data to the Service.
+2. **The Service (The Chef):** Does the brain work. Checks stock, calculates prices, handles errors.
+3. **The Repository (The Pantry):** ONLY talks to the database. Fetches and saves data using SQL/JDBC.
+
+### 8. The "O" - Open-Closed Principle (OCP)
+* **The Rule:** Code should be **Open for extension**, but **Closed for modification**.
+* **The Concept:** You should be able to add new features without ever rewriting your old code. 
+* **The Implementation:** We use Java `interfaces` (The Disc Drive). If we need a new payment method, we don't hack open the core `ProductService` file. We just create a new file (The Game Disc) that `implements` the interface and slide it in.

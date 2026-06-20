@@ -2,7 +2,7 @@ package com.ecommerce.api;
 
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin // <-- THIS IS THE NEW VIP PASS!
+@CrossOrigin
 @RestController
 public class ProductController {
 
@@ -14,6 +14,11 @@ public class ProductController {
 
     @PostMapping("/buy")
     public String buyProduct(@RequestBody BuyRequest request) {
-        return service.processOrder(request.getProductId(), request.getQuantity());
+        
+        // 1. Grab the Bitcoin disc
+        PaymentProcessor myPaymentMethod = new BitcoinPayment();
+        
+        // 2. Hand ALL THREE things to the Chef (ID, Quantity, AND the Disc)
+        return service.processOrder(request.getProductId(), request.getQuantity(), myPaymentMethod);
     }
-}
+} // <-- This is the curly bracket that was missing!

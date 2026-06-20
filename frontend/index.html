@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mechanical Keyboard Store</title>
+</head>
+<body>
+    <h1>Mechanical Keyboard (ID: P001)</h1>
+    <h2>Stock remaining: <span id="stock-count">10</span></h2>
+    
+    <button id="buy-button">BUY NOW ($99.99)</button>
+
+    <script>
+        // 1. Listen for the user to click the button
+        document.getElementById("buy-button").addEventListener("click", function() {
+            
+            // 2. The browser version of your "curl" POST request!
+            fetch("http://localhost:8080/buy", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "productId": "P001", 
+                    "quantity": 1
+                }) // This is the JSON order slip!
+            })
+            .then(response => response.text())
+            .then(text => {
+                // 3. Show the Waiter's success message in a pop-up alert
+                alert("Server says: " + text);
+            })
+            .catch(error => {
+                alert("Uh oh, the browser blocked the request!");
+            });
+
+        });
+    </script>
+</body>
+</html>
