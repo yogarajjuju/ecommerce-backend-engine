@@ -102,3 +102,8 @@ To prevent server crashes and keep code organized, enterprise backends are split
 * **The Rule:** Code should be **Open for extension**, but **Closed for modification**.
 * **The Concept:** You should be able to add new features without ever rewriting your old code. 
 * **The Implementation:** We use Java `interfaces` (The Disc Drive). If we need a new payment method, we don't hack open the core `ProductService` file. We just create a new file (The Game Disc) that `implements` the interface and slide it in.
+
+### 8. Liskov Substitution Principle (LSP) & Architecture Traits
+* **The Rule:** Child classes must be completely interchangeable with their Parent classes without breaking the application.
+* **The Strategy:** Instead of forcing all classes to inherit properties they don't use (e.g., giving a Digital Download a physical shipping weight), split optional behaviors into specialized interfaces called **Traits** (like `Shippable`).
+* **The Result:** The system remains generic where possible (treating everything as a `Product` during checkout) but remains highly specific where necessary (only processing shipping for items explicitly marked as `Shippable`), preventing runtime server crashes.
