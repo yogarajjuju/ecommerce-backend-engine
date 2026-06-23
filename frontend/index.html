@@ -1,48 +1,254 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Mechanical Keyboard Store</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEON MECH | Premium</title>
+    <style>
+        /* 1. Global Reset & Apple System Fonts */
+        :root {
+            --bg-color: #05010a;
+            --card-bg: rgba(20, 10, 35, 0.5);
+            --text-main: #f5f5f7;
+            --text-muted: #a1a1a6;
+            --glow-1: #a855f7;
+            --glow-2: #3b82f6;
+            --glow-3: #ec4899;
+        }
+        
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            /* Authentic Apple Font Stack */
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            height: 100vh; overflow: hidden;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        /* 2. Apple-Style Frosted Navbar */
+        nav {
+            width: 100%; padding: 15px 0;
+            background: rgba(5, 1, 10, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex; justify-content: center; gap: 40px;
+            z-index: 20; position: fixed; top: 0;
+        }
+        .nav-btn {
+            background: none; border: none; color: var(--text-muted);
+            font-size: 13px; font-weight: 500; letter-spacing: -0.5px;
+            cursor: pointer; transition: color 0.3s ease;
+        }
+        .nav-btn:hover, .nav-btn.active { color: var(--text-main); }
+
+        /* 3. Smooth Page Transitions */
+        .section {
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            height: 100vh; width: 100%; z-index: 10;
+            /* Apple's signature smooth ease-out */
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .section.active { display: flex; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 4. OxygenOS Contour Glow Architecture */
+        .contour-wrapper {
+            position: relative;
+            border-radius: 24px;
+            padding: 2px; /* This creates the border thickness */
+            background: linear-gradient(135deg, var(--glow-1), var(--glow-2), var(--glow-3));
+            background-size: 200% 200%;
+            animation: contourGlow 5s ease infinite;
+            box-shadow: 0 0 40px rgba(168, 85, 247, 0.3);
+        }
+        @keyframes contourGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(40px) saturate(200%);
+            -webkit-backdrop-filter: blur(40px) saturate(200%);
+            border-radius: 22px; padding: 50px 40px;
+            width: 320px; text-align: center;
+        }
+
+        /* 5. Typography */
+        h1 { 
+            font-size: 56px; font-weight: 700; letter-spacing: -2px; margin-bottom: 10px; 
+            background: linear-gradient(135deg, #fff, #a1a1a6);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .card h2 { font-size: 28px; font-weight: 600; letter-spacing: -1px; margin: 0 0 5px 0; }
+        p { color: var(--text-muted); font-size: 15px; line-height: 1.5; margin-bottom: 30px; }
+        .stock-indicator { font-size: 13px; font-weight: 500; color: #a855f7; margin-bottom: 25px; }
+
+        /* 6. Apple-Style Clean Inputs */
+        label { display: block; text-align: left; font-size: 12px; color: var(--text-muted); font-weight: 500; margin-bottom: 8px; }
+        select, input {
+            width: 100%; padding: 14px; margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main); font-family: inherit; font-size: 15px;
+            border-radius: 12px; outline: none; box-sizing: border-box;
+            transition: all 0.3s ease;
+            appearance: none; /* Removes default dropdown arrow for cleaner look */
+        }
+        select:focus, input:focus { 
+            border-color: var(--glow-1); 
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.15); 
+        }
+
+        /* Buttons */
+        .btn-primary {
+            width: 100%; padding: 16px;
+            background: var(--text-main); color: #000;
+            border: none; border-radius: 25px; 
+            font-size: 15px; font-weight: 600; cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .btn-primary:hover { transform: scale(1.02); background: #fff; box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
+        .btn-primary:active { transform: scale(0.98); }
+        
+        .btn-danger { background: rgba(255, 255, 255, 0.1); color: var(--text-main); backdrop-filter: blur(10px); }
+        .btn-danger:hover { background: rgba(236, 72, 153, 0.8); color: white; box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3); }
+
+        /* Toast Notification */
+        #toast {
+            visibility: hidden; min-width: 280px;
+            background: rgba(30, 30, 30, 0.85); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 30px;
+            color: #fff; padding: 14px 24px; font-size: 14px; font-weight: 500;
+            position: fixed; z-index: 100; left: 50%; bottom: 40px;
+            transform: translateX(-50%) scale(0.9); opacity: 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #toast.show { visibility: visible; transform: translateX(-50%) scale(1); opacity: 1; }
+    </style>
 </head>
 <body>
-    <h1>Mechanical Keyboard (ID: P001)</h1>
-    <h2>Stock remaining: <span id="stock-count">10</span></h2>
-    
-    <label for="payment-method">Choose Payment:</label>
-    <select id="payment-method">
-        <option value="CreditCard">Credit Card</option>
-        <option value="Bitcoin">Bitcoin</option>
-        <option value="GiftCard">Store Gift Card</option>
-    </select>
-    <br><br>
 
-    <button id="buy-button">BUY NOW ($99.99)</button>
+    <nav>
+        <button class="nav-btn active" onclick="switchTab('home')">Overview</button>
+        <button class="nav-btn" onclick="switchTab('store')">Tech Specs & Buy</button>
+        <button class="nav-btn" onclick="switchTab('refund')">Support</button>
+    </nav>
+
+    <div id="home" class="section active">
+        <h1>Mk-1 Pro.</h1>
+        <p style="font-size: 21px; max-width: 600px; text-align: center;">Profound power. Impossibly thin.<br>The ultimate developer experience.</p>
+        <button class="btn-primary" style="width: auto; padding: 12px 30px; margin-top: 20px;" onclick="switchTab('store')">Buy</button>
+    </div>
+
+    <div id="store" class="section">
+        <div class="contour-wrapper">
+            <div class="card">
+                <h2>Mk-1 Pro</h2>
+                <div class="stock-indicator">Available Stock: <span id="stock-count">10</span></div>
+                
+                <label>Select Payment Architecture</label>
+                <select id="payment-method">
+                    <option value="CreditCard">Credit Card</option>
+                    <option value="Bitcoin">Bitcoin Wallet</option>
+                    <option value="GiftCard">Apple Pay / Gift Card</option>
+                </select>
+
+                <button id="buy-button" class="btn-primary">Initialize Purchase</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="refund" class="section">
+        <div class="contour-wrapper">
+            <div class="card">
+                <h2>Support</h2>
+                <p>Request an automated order reversal.</p>
+                
+                <label>Order Confirmation ID</label>
+                <input type="text" placeholder="ORD-99384" id="order-id">
+
+                <button id="refund-button" class="btn-primary btn-danger">Reverse Transaction</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast">Message here</div>
 
     <script>
-        document.getElementById("buy-button").addEventListener("click", function() {
+        // --- Navigation Logic ---
+        function switchTab(tabId) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
             
-            // 2. Look at what the user selected in the dropdown
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // --- Toast Logic ---
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            toast.innerText = message;
+            toast.classList.add("show");
+            setTimeout(() => { toast.classList.remove("show"); }, 4000);
+        }
+
+        // --- BUG FIX: Buy Button Logic ---
+        document.getElementById("buy-button").addEventListener("click", function() {
+            const btn = this;
+            btn.innerText = "Processing..."; btn.style.opacity = "0.7";
+
             const selectedPayment = document.getElementById("payment-method").value;
 
-            // 3. Send the upgraded JSON order slip!
             fetch("http://localhost:8080/buy", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "productId": "P001", 
-                    "quantity": 1,
-                    "paymentType": selectedPayment // <-- NEW!
-                }) 
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ "productId": "P001", "quantity": 1, "paymentType": selectedPayment }) 
             })
             .then(response => response.text())
             .then(text => {
-                alert("Server says: " + text);
+                showToast(text);
+                
+                // 🛠️ THE BUG FIX: If Java says success, dynamically drop the HTML stock count
+                if (text.includes("✅")) {
+                    let stockElement = document.getElementById("stock-count");
+                    let currentStock = parseInt(stockElement.innerText);
+                    if (currentStock > 0) {
+                        stockElement.innerText = currentStock - 1;
+                    }
+                }
+
+                btn.innerText = "Initialize Purchase"; btn.style.opacity = "1";
             })
             .catch(error => {
-                alert("Uh oh, the browser blocked the request!");
+                showToast("Connection Interrupted. Verify Backend Status.");
+                btn.innerText = "Initialize Purchase"; btn.style.opacity = "1";
             });
+        });
 
+        // --- Support: Refund Button Logic ---
+        document.getElementById("refund-button").addEventListener("click", function() {
+            const btn = this;
+            btn.innerText = "Contacting Server..."; btn.style.opacity = "0.7";
+
+            fetch("http://localhost:8080/test-refund")
+            .then(response => response.text())
+            .then(text => {
+                showToast(text); 
+                btn.innerText = "Reverse Transaction"; btn.style.opacity = "1";
+            })
+            .catch(error => {
+                showToast("Connection Interrupted. Verify Backend Status.");
+                btn.innerText = "Reverse Transaction"; btn.style.opacity = "1";
+            });
         });
     </script>
 </body>
