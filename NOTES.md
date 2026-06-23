@@ -107,3 +107,15 @@ To prevent server crashes and keep code organized, enterprise backends are split
 * **The Rule:** Child classes must be completely interchangeable with their Parent classes without breaking the application.
 * **The Strategy:** Instead of forcing all classes to inherit properties they don't use (e.g., giving a Digital Download a physical shipping weight), split optional behaviors into specialized interfaces called **Traits** (like `Shippable`).
 * **The Result:** The system remains generic where possible (treating everything as a `Product` during checkout) but remains highly specific where necessary (only processing shipping for items explicitly marked as `Shippable`), preventing runtime server crashes.
+
+
+### 9. Interface Segregation Principle (ISP)
+* **The Rule:** Do not force a class to implement methods it doesn't need (Don't build a TV remote with a Drone button).
+* **The Strategy:** Keep interfaces incredibly small and specific (e.g., separating `PaymentProcessor` from `Refundable`). 
+* **The Result:** Classes like `GiftCardPayment` remain lightweight and mathematically impossible to refund, preventing runtime crashes.
+
+
+### 10. Dependency Inversion Principle (DIP)
+* **The Rule:** High-level modules (The Waiter/Chef) should not depend on low-level modules (Bitcoin/Credit Card). Both should depend on abstractions (Interfaces).
+* **The Strategy:** Instead of hard-coding a specific payment method inside the engine, we read the user's JSON request and dynamically plug the correct "Game Disc" into the engine.
+* **The Result:** The system is 100% dynamic. The frontend controls the flow, and the backend safely processes it through the interface contract.

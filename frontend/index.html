@@ -7,13 +7,23 @@
     <h1>Mechanical Keyboard (ID: P001)</h1>
     <h2>Stock remaining: <span id="stock-count">10</span></h2>
     
+    <label for="payment-method">Choose Payment:</label>
+    <select id="payment-method">
+        <option value="CreditCard">Credit Card</option>
+        <option value="Bitcoin">Bitcoin</option>
+        <option value="GiftCard">Store Gift Card</option>
+    </select>
+    <br><br>
+
     <button id="buy-button">BUY NOW ($99.99)</button>
 
     <script>
-        // 1. Listen for the user to click the button
         document.getElementById("buy-button").addEventListener("click", function() {
             
-            // 2. The browser version of your "curl" POST request!
+            // 2. Look at what the user selected in the dropdown
+            const selectedPayment = document.getElementById("payment-method").value;
+
+            // 3. Send the upgraded JSON order slip!
             fetch("http://localhost:8080/buy", {
                 method: "POST",
                 headers: {
@@ -21,12 +31,12 @@
                 },
                 body: JSON.stringify({
                     "productId": "P001", 
-                    "quantity": 1
-                }) // This is the JSON order slip!
+                    "quantity": 1,
+                    "paymentType": selectedPayment // <-- NEW!
+                }) 
             })
             .then(response => response.text())
             .then(text => {
-                // 3. Show the Waiter's success message in a pop-up alert
                 alert("Server says: " + text);
             })
             .catch(error => {
