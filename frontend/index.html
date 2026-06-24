@@ -208,7 +208,7 @@
 
             const selectedPayment = document.getElementById("payment-method").value;
 
-            fetch("http://localhost:8080/buy", {
+            fetch("https://jubilant-system-6p469j5xqgrhrqr7-8080.app.github.dev/buy", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ "productId": "P001", "quantity": 1, "paymentType": selectedPayment }) 
@@ -239,7 +239,7 @@
             const btn = this;
             btn.innerText = "Contacting Server..."; btn.style.opacity = "0.7";
 
-            fetch("http://localhost:8080/test-refund")
+            fetch("https://jubilant-system-6p469j5xqgrhrqr7-8080.app.github.dev/test-refund")
             .then(response => response.text())
             .then(text => {
                 showToast(text); 
