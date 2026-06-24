@@ -245,6 +245,7 @@
                 showToast(text); 
                 btn.innerText = "Reverse Transaction"; btn.style.opacity = "1";
             })
+
             .catch(error => {
                 showToast("Connection Interrupted. Verify Backend Status.");
                 btn.innerText = "Reverse Transaction"; btn.style.opacity = "1";
